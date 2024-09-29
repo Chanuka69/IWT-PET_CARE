@@ -1,0 +1,97 @@
+/* Overall page container */
+.R-page-container {
+    display: flex; /* Sets the container as a flexbox */
+    flex-direction: column; /* Arranges items in a column */
+    align-items: center; /* Centers the card horizontally */
+    padding: 20px; /* Adds padding around the container */
+    background-color: #f0f4f8; /* Light background color */
+    height: 100vh; /* Full height */
+  }
+  
+  /* Logo styling */
+  .R-logo {
+    position: absolute; /* Positions the logo at a specific spot */
+    top: 20px; /* Moves the logo 20px from the top of the page */
+    left: 20px; /* Moves the logo 20px from the left */
+    width: 100px; /* Fixed width for the logo */
+    height: auto; /* Maintain aspect ratio */
+  }
+  
+  /* Form card container */
+  .R-card {
+    background-color: rgba(233, 203, 203, 0.829); /* White background for the card */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for the card */
+    border-radius: 10px; /* Rounded corners */
+    padding: 40px; /* Space inside the card */
+    width: 400px; /* Fixed width for the card */
+  }
+  
+  /* Styling the fieldset */
+  .R-card fieldset {
+    border: none; /* Remove default border */
+    padding: 0; /* Removes default padding */
+  }
+  
+  /* Styling the legend */
+  .R-card legend {
+    background-color: #38168d; /* Dark purple background */
+    color: white; /* White text color */
+    padding: 10px 20px; /* Padding inside the legend */
+    border-radius: 5px; /* Rounded corners */
+    font-size: 24px; /* Larger font size */
+    font-weight: bold; /* Bold text */
+    text-align: center; /* Center the text */
+  }
+  
+  /* Labels for the form */
+  .R-card label {
+    font-size: 16px; /* Font size for labels */
+    font-weight: bold; /* Bold labels */
+    font-family: 'Verdana', Geneva, Tahoma, sans-serif; /* Specifies the font family */
+    color: #000000; /* Black text color */
+    display: block; /* Makes label take full width */
+    margin-bottom: 8px; /* Space between label and input */
+  }
+  
+  /* Inputs and select fields */
+  .R-card input, /* Styles input fields */
+  .R-card textarea, /* Styles textarea */
+  .R-card select { /* Styles select dropdown */
+    width: 100%; /* Full width of the card */
+    padding: 10px; /* Padding inside inputs */
+    margin-bottom: 20px; /* Space between inputs */
+    border-radius: 5px; /* Rounded corners */
+    border: 1px solid #200d66; /* Border around inputs */
+    font-size: 16px; /* Font size inside inputs */
+  }
+  
+  /* Textarea customization */
+  .R-card textarea {
+    height: 80px; /* Fixed height for the textarea */
+    resize: vertical; /* Allows resizing vertically only */
+  }
+  
+  /* Button wrapper to center the button */
+  .R-button-wrapper {
+    display: flex; /* Use flexbox for the wrapper */
+    justify-content: center; /* Centers the button horizontally */
+  }
+  
+  /* Submit button */
+  .R-card button {
+    background-color: #38168d; /* Dark purple background */
+    color: white; /* White text color */
+    font-size: 18px; /* Font size for the button */
+    padding: 10px 20px; /* Padding inside the button */
+    border: none; /* No border around the button */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s ease; /* Smooth color transition */
+    width: 100%; /* Full width of the card */
+  }
+  
+  /* Button hover effect */
+  .R-card button:hover {
+    background-color: #54329a; /* Slightly darker purple on hover */
+  }
+  

@@ -1,0 +1,260 @@
+
+/* General Page Styling */
+body {
+    font-family: 'Arial', sans-serif; /* Use Arial font for readability */
+    margin: 0; /* Remove default margin around the page */
+    padding: 0; /* Remove default padding around the page */
+    background-color: #f4f4f4; /* Set a light grey background color for the entire page */
+}
+
+
+
+/* Top Bar Styling */
+.topbar {
+    display: flex; /* Use flexbox to align items horizontally */
+    align-items: center; /* Vertically center the items within the top bar */
+    background-color: #333; /* Dark grey background color for the top bar */
+    padding: 10px 20px; /* Add padding around the top bar content */
+    color: white; /* Set text color to white for contrast */
+    position: fixed; /* Fix the position to the top of the viewport */
+    width: 100%; /* Ensure the top bar spans the full width of the viewport */
+    top: 0; /* Align the top bar with the top of the viewport */
+    z-index: 1; /* Ensure the top bar is on top of other elements */
+}
+
+/* Top Menu Icon Styling */
+.top-menu {
+    font-size: 24px; /* Set the size of the menu icon */
+    cursor: pointer; /* Change the cursor to a pointer to indicate clickable item */
+}
+
+/* Logo Styling */
+.logo img {
+    height: 40px; /* Set the height of the logo image */
+}
+
+/* Search Bar Styling */
+.search-bar {
+    display: flex; /* Use flexbox to align search input and button horizontally */
+    align-items: center; /* Vertically center the items within the search bar */
+    flex-grow: 1; /* Allow the search bar to take up the remaining space */
+    margin: 0 20px; /* Add horizontal margins to separate the search bar from other elements */
+}
+
+/* Search Input Field Styling */
+.search-bar input {
+    padding: 5px; /* Add padding inside the input field for better usability */
+    border-radius: 5px; /* Round the corners of the input field */
+    border: none; /* Remove default border */
+}
+
+/* Search Button Styling */
+.search-bar button {
+    background-color: #007BFF; /* Blue background color for the button */
+    color: white; /* White text color for contrast */
+    border: none; /* Remove default border */
+    border-radius: 5px; /* Round the corners of the button */
+    padding: 5px 10px; /* Add padding inside the button */
+    cursor: pointer; /* Change cursor to pointer on hover to indicate it's clickable */
+}
+
+/* Search Icon Styling inside Button */
+.search-bar button i {
+    font-size: 16px; /* Set the size of the search icon */
+}
+
+/* User Icon Styling */
+.user-icon {
+    height: 40px; /* Set the height of the user icon image */
+    border-radius: 50%; /* Make the image circular */
+}
+
+/* Side Navigation Styling */
+.sidenav {
+    height: 100%; /* Full height of the viewport */
+    width: 0; /* Initially hidden with zero width */
+    position: fixed; /* Fix the position to the left side of the viewport */
+    z-index: 1; /* Ensure the side navigation is on top of other elements */
+    top: 64px; /* Align below the top bar (adjust if the top bar height changes) */
+    left: 0; /* Align with the left edge of the viewport */
+    background-color: #333; /* Dark grey background color for the side navigation */
+    overflow-x: hidden; /* Hide horizontal overflow */
+    transition: 0.3s; /* Smooth transition effect for opening and closing */
+    padding-top: 60px; /* Add padding to the top of the side navigation for spacing */
+}
+
+/* Side Navigation Link Styling */
+.sidenav a {
+    padding: 8px 8px 8px 32px; /* Add padding and align text inside links */
+    text-decoration: none; /* Remove underline from links */
+    font-size: 25px; /* Set the font size for links */
+    color: white; /* Set link text color to white for contrast */
+    display: block; /* Block display for each link to make them stack vertically */
+    transition: 0.3s; /* Smooth transition effect on hover */
+}
+
+/* Side Navigation Link Hover Styling */
+.sidenav a:hover {
+    color: #f1f1f1; /* Light grey color when hovered over for better visibility */
+}
+
+/* Close Button Styling in Side Navigation */
+.sidenav .closebtn {
+    position: absolute; /* Position the close button absolutely within the side navigation */
+    top: 0; /* Align with the top of the side navigation */
+    right: 25px; /* Position from the right edge of the side navigation */
+    font-size: 36px; /* Size of the close button text */
+    margin-left: 50px; /* Add left margin for spacing */
+}
+
+/* Log Out Button Styling */
+.log-out-button {
+    padding: 8px 32px; /* Add padding around the button */
+    text-align: center; /* Center the button text */
+}
+
+.log-out-button button {
+    background-color: #dc3545; /* Red background color for the log-out button */
+    color: white; /* White text color for contrast */
+    border: none; /* Remove default border */
+    border-radius: 5px; /* Round the corners of the button */
+    padding: 10px; /* Add padding inside the button */
+    cursor: pointer; /* Change cursor to pointer on hover to indicate it's clickable */
+}
+
+/* Main Content Adjustment */
+#main {
+    transition: margin-left .3s; /* Smooth transition effect for margin adjustment */
+    padding: 50px; /* Add padding inside the main content area */
+}
+
+/* Title Section Styling */
+.title-section {
+    text-align: center; /* Center the title text */
+    margin: 20px 0; /* Add vertical margins around the title */
+}
+
+.title-section h2 {
+    font-size: 24px; /* Set the font size for the title */
+}
+
+
+
+/*------------------------ Profile Section Styling ---------------------*/
+.profile-section {
+    text-align: center; /* Center text inside the profile section */
+    padding: 20px; /* Add padding around the section */
+    background-color: #fff; /* White background for the profile section */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow to the profile section */
+    border-radius: 10px; /* Round corners of the section */
+    margin: 20px auto; /* Center the section with auto margins */
+    width: 80%; /* Set width of the profile section */
+}
+
+.profile-photo {
+    width: 150px; /* Set width for the profile photo */
+    height: 150px; /* Set height for the profile photo */
+    border-radius: 50%; /* Make the photo circular */
+    margin-bottom: 20px; /* Add space below the photo */
+}
+
+.profile-buttons {
+    margin-top: 20px; /* Add space above the buttons */
+  
+cursor: pointer; /* Change cursor to pointer on hover */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+.profile-buttons button:hover {
+    background-color: #0056b3; /* Darker blue color on hover */
+}
+
+
+
+
+/* Footer Styling */
+footer {
+    text-align: center; /* Center text inside the footer */
+    padding: 20px; /* Add padding around the footer content */
+    background-color: #333; /* Dark grey background color for the footer */
+    color: white; /* White text color for contrast */
+    position: relative; /* Change from absolute to relative positioning */
+    bottom: 0; /* Align the footer with the bottom of the page */
+    width: 100%; /* Ensure the footer spans the full width of the page */
+}
+
+/* Footer Link Styling */
+footer a {
+    color: white; /* Set link color to white */
+    margin: 5px 0; /* Add space between footer links */
+}
+
+
+.profile-buttons button {
+    background-color: #007BFF; /* Blue background for buttons */
+    color: white; /* White text color */
+    border: none; /* Remove default border */
+    border-radius: 5px; /* Round corners of the buttons */
+    padding: 10px 20px; /* Add padding inside the buttons */
+    margin: 5px; /* Add margin between buttons */
+}
+
+
+
+
+
+
+/* Profile Section Styling */
+.profile-section {
+    text-align: center; /* Center text inside the profile section */
+    padding: 20px; /* Add padding around the section */
+    background-color: #fff; /* White background for the profile section */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow to the profile section */
+    border-radius: 10px; /* Round corners of the section */
+    margin: 20px auto; /* Center the section with auto margins */
+    width: 60%; /* Set a smaller width for the profile section */
+}
+
+/* Form Styling */
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+form div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+label {
+    flex: 1; /* Take up some space for the label */
+    text-align: right; /* Align label text to the right */
+    margin-right: 10px; /* Space between label and input */
+}
+
+input {
+    flex: 2; /* Take up more space for the input */
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Small Button Styling */
+button {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px; /* Smaller padding for smaller buttons */
+    font-size: 14px; /* Smaller font size */
+    margin: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}

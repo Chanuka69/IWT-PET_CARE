@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Pet Hostel</title>
+    <link rel="stylesheet" href="hostel.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- Font Awesome for icons -->
+</head>
+<body>
+    <!-- Top Bar -->
+    <div class="topbar">
+        <span class="top-menu" onclick="openNav()">&#9776;</span>
+        <div class="logo">
+            <img src="https://static.vecteezy.com/system/resources/previews/000/467/567/original/pet-shop-logo-vector.jpg" alt="PetLife Co Logo">
+        </div>
+        <div class="search-bar">
+            <input type="text" placeholder="Search..">
+            <button type="submit"><i class="fa fa-search"></i></button>
+        </div>
+        <img src="https://ehonami.blob.core.windows.net/media/2018/07/7-ways-dog-owners-healthier-live-longer.jpg" alt="User Profile" class="user-icon">
+    </div>
+
+    <!-- Side Navigation -->
+    <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <div class="side-list">
+            <a href="My Profile.html">My Account</a>
+            <a href="My pets.html">My Pets</a>
+            <a href="#">My Appointments</a>
+            <a href="#">My Cart</a>
+        </div>
+        <div class="log-out-button">
+            <button>Log Out</button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div id="main">
+        <!-- Image Section -->
+        <section class="image-section">
+            <img src="http://www.psyeta.org/wp-content/uploads/2022/02/AdobeStock_481854656-1-scaled.jpeg" alt="Pet Hostel Image" class="hostel-img">
+        </section>
+
+        <!-- Booking Form -->
+        <section class="booking-form">
+            <select name="pet" id="pet-select">
+                <option value="">Select Pet</option>
+                <option value="dog">Dog</option>
+                <option value="cat">Cat</option>
+                <option value="Bird">Bird</option>
+                <option value="Fish">Fish</option>
+                <option value="Rabbits">Rabbits</option>
+                <option value="Guinea Pigs">Guinea Pigs</option>
+                <option value="Horses">Horses</option>
+                <option value="Reptiles">Reptiles</option>
+            </select>
+
+            <label id="check-in">check-in</label>
+            <input type="date" id="check-in" name="check-in">
+            <label id="check-in">check-out</label>
+            <input type="date" id="check-out" name="check-out">
+
+            <button class="book-btn" id="bookBtn">Book Now</button>
+        </section>
+
+        <!-- Hostel Options Cards -->
+        <section class="hostel-options">
+            <div class="hostel-card" id="standardCard">
+                <img src="https://image.cnbcfm.com/api/v1/image/104661266-pet-hotels-2.jpg?v=1503071272" alt="Standard Hostel Image" class="hostel-image">
+                <h3>Standard</h3>
+                <p>Basic pet hostel with all essential services.</p>
+            </div>
+            <div class="hostel-card" id="kittyHouseCard">
+                <img src="https://luxurylaunches.com/wp-content/uploads/2017/07/Cover-Image-1170x651.jpg" alt="Kitty House Image" class="hostel-image">
+                <h3>Kitty House</h3>
+                <p>Premium hostel for your feline friends.</p>
+            </div>
+        </section>
+
+        <!-- Hidden input to store selected hostel option -->
+        <input type="hidden" name="hostelOption" id="hostelOption">
+
+        <!-- Footer -->
+        <footer>
+            <p>PetLife Co pvt ltd &copy; 2024</p>
+            <p><a href="#">Contact Us</a> | <a href="#">About Us</a></p>
+        </footer>
+    </div>
+
+    <script src="scripts.js"></script>
+</body>
+</html>
+
+
