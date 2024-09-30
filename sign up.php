@@ -1,6 +1,15 @@
 <?php
+
+session_start(); // Start the session
+
+// Check if the user is logged in by checking if 'user_id' exists in the session
+if (!isset($_SESSION['user_id'])) {
+    die("Error: You must be logged in to access this page."); // If not logged in, display an error message
+}
+
 require "connect_dbshop.php";
 
+$user_id = $_SESSION['user_id'];
 
 if ($_SERVER["REQUEST_METHOD"]=="POST"){
     $pname = $_POST['petname'];
@@ -10,13 +19,19 @@ if ($_SERVER["REQUEST_METHOD"]=="POST"){
     $pweight = $_POST['pet_weight'];
     $pgender = $_POST['pet_gender'];
     $pnote = $_POST['pet_note'];
-    $photo = $_POST['pet_photo'];
 
-    $sql = "INSERT INTO pet VALUES ('','','$pname','$page','$pbreed','$pgender','$pweight','$ptype','$pnote','$photo')";
+    if(isset($_FILES['pet_photo'])){
+        $photo = $_FILES['pet_photo'];
+    } else{
+        $photo = null;
+    }
+    
+
+    $sql = "INSERT INTO Pet_Data VALUES (NULL,'$user_id','$pname','$page','$pbreed','$pgender','$pweight','$ptype','$photo','$pnote')";
 
     if($conn->query($sql))
     {
-        header("Location: http://localhost/PetCare/My pets.php");
+        header("Location: http://localhost/PetCare/User Profile.php");
         die();
     }
     else {
@@ -74,8 +89,8 @@ if ($_SERVER["REQUEST_METHOD"]=="POST"){
 
                     <label for="pet_gender">Gender</label>
                     <select name="pet_gender" required>
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
+                        <option value="M">Male</option>
+                        <option value="F">Female</option>
                     </select>
 
                     <label for="pet_note">Additional Notes</label>

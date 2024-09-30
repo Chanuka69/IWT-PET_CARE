@@ -1,9 +1,29 @@
 <?php
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
+    
+    session_start(); // Start the session
+
+    // Check if the user is logged in by checking if 'user_id' exists in the session
+    if (!isset($_SESSION['user_id'])) {
+        die("Error: You must be logged in to access this page."); // If not logged in, display an error message
+    }
+
     require "connect_dbshop.php";
+
+
+
+    // Store the logged-in user's ID from the session
+    $user_id = $_SESSION['user_id'];
+
+    
+    // Fetch the user's current profile details
+    $query = "SELECT name,pet_image_path  FROM Pet_Data WHERE owner_id='$user_id'";
+    
+    $pname_result = mysqli_query($conn, $query);
+
 ?>
-
-
-
 
 
 <!DOCTYPE html>
@@ -46,19 +66,25 @@
     <!-- Main Content -->
     <div id="main">
         <h2 class="title-section">My Pets</h2> <!-- Title for the pets section -->
-        <button class="add-pet-btn"  onclick="location.href='index.php';">Add New Pet</button> <!-- Button to add new pet -->
+        <button class="add-pet-btn"  onclick="location.href='sign up.php';">Add New Pet</button> <!-- Button to add new pet -->
 
         <!-- Pet Cards Section -->
         <section class="pet-cards">
-            <div class="pet-card">
-                <img src="https://phasephotography.co.uk/wp-content/uploads/2019/11/WEB-PETS_15.jpg" alt="Pet 1" class="pet-image"> <!-- Replace with actual pet image URL -->
-                <h3>Pet Name 1</h3> <!-- Replace with actual pet name -->
-            </div>
-            <div class="pet-card">
-                <img src="https://cdn.pixabay.com/photo/2023/07/27/14/50/cat-8153510_1280.jpg" alt="Pet 2" class="pet-image"> <!-- Replace with actual pet image URL -->
-                <h3>Pet Name 2</h3> <!-- Replace with actual pet name -->
-            </div>
-            <!-- Add more pet cards as needed -->
+            <?php
+            // Check if any pets are found
+            if(mysqli_num_rows($pname_result)>0){
+                // Iterate through each pet and create a card
+                while($row= mysqli_fetch_assoc($pname_result)){
+                    echo '<div class="pet-card">';
+                    echo '<img src="'. htmlspecialchars($row['pet_image_path']) . '" alt="Pet Image" class="pet-image">'; // Fetch and display pet image
+                    echo '<h3>' . htmlspecialchars($row['name']) . '</h3>';
+                    echo '</div>';
+                }
+            } else {
+                echo '<p>No pets found.</p>'; 
+            }
+
+            ?>
         </section>
 
         <!-- Footer -->

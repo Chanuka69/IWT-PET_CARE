@@ -1,3 +1,22 @@
+<?php
+
+    session_start(); // Start the session
+
+    // Check if the user is logged in by checking if 'user_id' exists in the session
+    if (!isset($_SESSION['userId'])) {
+        die("Error: You must be logged in to access this page."); // If not logged in, display an error message
+    }
+
+    require "connect_dbshop.php";
+
+    $query = "INSERT INTO appoinmet VALUES ();
+
+    $result = mysli_query($conn,$quey);
+
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

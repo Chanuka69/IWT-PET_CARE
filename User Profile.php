@@ -2,7 +2,7 @@
 session_start(); // Start the session
 
 // Check if the user is logged in by checking if 'user_id' exists in the session
-if (!isset($_SESSION['userId'])) {
+if (!isset($_SESSION['user_id'])) {
     die("Error: You must be logged in to access this page."); // If not logged in, display an error message
 }
 
@@ -10,7 +10,7 @@ if (!isset($_SESSION['userId'])) {
 require "connect_dbshop.php"; // Make sure this file connects to your database correctly
 
 // Store the logged-in user's ID from the session
-$user_id = $_SESSION['userId'];
+$user_id = $_SESSION['user_id'];
 
 // Check if the form is submitted to update the profile
 if (isset($_POST['update_profile'])) {
@@ -21,10 +21,9 @@ if (isset($_POST['update_profile'])) {
     $email = $_POST['email'];
     
     // Update the user's information in the database
-    $update_query = "UPDATE Users SET first_name='$fname', last_name='$lname', email='$email' WHERE user_id='$user_id'";
-    $update_phone = "UPDATE User_Phone SET phone_num = '$phone' WHERE user_id = '$user_id'";
+    $update_query = "UPDATE User_Data SET first_name='$fname', last_name='$lname', email='$email' WHERE user_id='$user_id'";
     mysqli_query($conn, $update_query);
-    mysqli_query($conn, $update_phone);
+
 }
 
 // Check if the form is submitted to reset the password
@@ -33,13 +32,25 @@ if (isset($_POST['reset_password'])) {
     $new_password = $_POST['new_password'];
     
     // Update the user's password in the database (you should hash passwords in real-world applications)
-    $update_password_query = "UPDATE User_Data SET password='$new_password' WHERE user_id='$user_id'";
-    mysqli_query($conn, $update_password_query);
+    if (!empty($new_password)) {
+        $update_password_query = "UPDATE User_Data SET password='$new_password' WHERE user_id='$user_id'";
+        mysqli_query($conn, $update_password_query);
+    } else {
+        $message = "Enter password";
+    }
+}    
+
+// Check if the form is submitted to delete the account
+if (isset($_POST['delete_Account'])) {
+    $delete_AC = "DELETE FROM User_Data WHERE user_id ='$user_id'";
+    mysqli_query($conn, $delete_AC);
+    session_destroy(); // Destroy the session after deleting the account
+    header("Location: http://localhost/PetCare/test.php"); // Redirect to a goodbye page
+    exit();
 }
 
 // Fetch the user's current profile details
-$query = "SELECT first_name, last_name,email FROM User_Data WHERE user_id='$user_id'";
-$query2 = "SELECT phone_ FROM User_Data WHERE user_id='$user_id'";
+$query = "SELECT first_name, last_name, email FROM User_Data WHERE user_id='$user_id'";
 $result = mysqli_query($conn, $query);
 
 if ($row = mysqli_fetch_assoc($result)) {
@@ -49,8 +60,6 @@ if ($row = mysqli_fetch_assoc($result)) {
 } else {
     die("Error: User not found.");
 }
-$result2 = mysqli_query($conn, $query2);
-$phone = $result2;
 ?>
 
 <!DOCTYPE html>
@@ -93,7 +102,6 @@ $phone = $result2;
     <!-- Main Content -->
     <div id="main">
         <!-- Profile Section -->
-<!-- Profile Section -->
         <section class="profile-section">
             <h2>User Profile</h2>
             <!-- Profile form to update user's profile details -->
@@ -106,11 +114,6 @@ $phone = $result2;
                 <div>
                     <label for="lname"><strong>Last Name:</strong></label>
                     <input type="text" id="lname" name="lname" value="<?php echo $lname; ?>" disabled>
-                </div>
-
-                <div>
-                    <label for="phone"><strong>Phone Number:</strong></label>
-                    <input type="number" id="phone" name="phone" value="<?php echo $phone; ?>" disabled>
                 </div>
 
                 <div>
@@ -127,15 +130,18 @@ $phone = $result2;
                 <div>
                     <label for="new_password"><strong>New Password:</strong></label>
                     <input type="password" id="new_password" name="new_password" disabled>
+                    <?php if (isset($message)) echo $message; ?>
                 </div>
 
                 <button type="button" id="resetPassword" onclick="enablePasswordReset()">Reset Password</button>
                 <button type="submit" name="reset_password" id="savePassword" style="display:none;">Save New Password</button>
             </form>
 
-            <button id="deleteAccount" onclick="confirmDelete()">Delete Account</button>
+            <!-- Delete Account Form -->
+            <form method="post" id="deleteAccountForm">
+                <button type="submit" name="delete_Account" onclick="return confirm('Are you sure you want to delete your account? This action cannot be undone.');">Delete Account</button>
+            </form>
         </section>
-
 
         <!-- Footer -->
         <footer>
@@ -150,7 +156,6 @@ $phone = $result2;
         function enableProfileEditing() {
             document.getElementById('fname').disabled = false;
             document.getElementById('lname').disabled = false;
-            document.getElementById('phone').disabled = false;
             document.getElementById('email').disabled = false;
             document.getElementById('saveProfile').style.display = 'inline'; // Show save button
             document.getElementById('editProfile').style.display = 'none'; // Hide edit button
@@ -161,14 +166,6 @@ $phone = $result2;
             document.getElementById('new_password').disabled = false;
             document.getElementById('savePassword').style.display = 'inline'; // Show save button
             document.getElementById('resetPassword').style.display = 'none'; // Hide reset button
-        }
-
-        // Confirm deletion of the account
-        function confirmDelete() {
-            if (confirm("Are you sure you want to delete your account? This action cannot be undone.")) {
-                // Logic to delete the account
-                alert('Account deleted'); // Replace with actual deletion logic
-            }
         }
 
         // Log out user

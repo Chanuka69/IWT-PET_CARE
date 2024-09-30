@@ -13,7 +13,7 @@ function closeNav() {
 
 
 
-//------------------------------    Book Pet Hostel --------------------------------------
+//------------------------------    Book Pet vet--------------------------------------
 
 // Placeholder script for future functionality
 document.addEventListener('DOMContentLoaded', function() {
@@ -33,37 +33,24 @@ function bookAppointment(time) {
 
 
 
+
 //---------------------------------    Book Pet Hostel ------------------------------------------------------
 
-// JavaScript for selecting the hostel option and booking
-let selectedHostel = ''; // To store the selected hostel
+function selectHostel(hostel) {
+    // Highlight the selected card and set the hidden input value
+    document.getElementById('hostelOption').value = hostel;
 
-// Event listener for Standard card click
-document.getElementById('standardCard').addEventListener('click', function() {
-    selectedHostel = 'Standard'; // Set the selected hostel
-    document.getElementById('standardCard').classList.add('selected'); // Highlight the selected card
-    document.getElementById('kittyHouseCard').classList.remove('selected'); // Remove highlight from other card
-});
+    // Remove 'selected' class from all cards
+    const cards = document.querySelectorAll('.hostel-card');
+    cards.forEach(card => card.classList.remove('selected'));
 
-// Event listener for Kitty House card click
-document.getElementById('kittyHouseCard').addEventListener('click', function() {
-    selectedHostel = 'Kitty House'; // Set the selected hostel
-    document.getElementById('kittyHouseCard').classList.add('selected'); // Highlight the selected card
-    document.getElementById('standardCard').classList.remove('selected'); // Remove highlight from other card
-});
-
-// Event listener for the Book Now button click
-document.getElementById('bookBtn').addEventListener('click', function() {
-    if (selectedHostel === '') {
-        alert('Please select a hostel option before booking.'); // Ensure a hostel option is selected
-    } else {
-        // Set the selected hostel option in the hidden input
-        document.getElementById('hostelOption').value = selectedHostel;
-        alert("Booking for: " + selectedHostel + " is submitted!");
-        // You can submit the form here if needed, e.g. document.getElementById('bookingForm').submit();
+    // Add 'selected' class to the clicked card
+    if (hostel === 'Standard') {
+        document.getElementById('standardCard').classList.add('selected');
+    } else if (hostel === 'Kitty House') {
+        document.getElementById('kittyHouseCard').classList.add('selected');
     }
-});
-
+}
 
 
 
