@@ -31,13 +31,10 @@ function bookAppointment(time) {
 
 
 
-
-
-
 //---------------------------------    Book Pet Hostel ------------------------------------------------------
 
 function selectHostel(hostel) {
-    // Highlight the selected card and set the hidden input value
+    // Set the hidden input value to the selected hostel type
     document.getElementById('hostelOption').value = hostel;
 
     // Remove 'selected' class from all cards
@@ -52,32 +49,15 @@ function selectHostel(hostel) {
     }
 }
 
-
-
-
-
-
-
-
-
-// ---------------- USER PROFILE-----------------------------------------------------
-
-// Event listener for Edit button click
-document.getElementById('editProfile').addEventListener('click', function() {
-    alert('Edit profile functionality coming soon!'); // Placeholder alert for edit functionality
-});
-
-// Event listener for Reset Password button click
-document.getElementById('resetPassword').addEventListener('click', function() {
-    alert('Reset password functionality coming soon!'); // Placeholder alert for reset password functionality
-});
-
-// Event listener for Delete Account button click
-document.getElementById('deleteAccount').addEventListener('click', function() {
-    if (confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
-        alert('Account deletion functionality coming soon!'); // Placeholder alert for delete account functionality
+function validateHostelOption(event) {
+    // Prevent form submission if no hostel option is selected
+    const hostelOption = document.getElementById('hostelOption').value;
+    if (!hostelOption) {
+        alert("Please select a hostel option.");
+        event.preventDefault();
     }
-});
+}
+
 
 
 

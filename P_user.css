@@ -1,223 +1,146 @@
-/* General Page Styling */
+/* Body styling */
 body {
-    font-family: 'Arial', sans-serif; /* Use Arial font for readability */
-    margin: 0; /* Remove default margin around the page */
-    padding: 0; /* Remove default padding around the page */
-    background-color: #f4f4f4; /* Set a light grey background color for the entire page */
+    font-family: Arial, sans-serif; /* Font for the body */
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+    background-color: #f4f4f4; /* Light gray background */
 }
 
-
-
-/* Top Bar Styling */
-.topbar {
-    display: flex; /* Use flexbox to align items horizontally */
-    align-items: center; /* Vertically center the items within the top bar */
-    background-color: #333; /* Dark grey background color for the top bar */
-    padding: 10px 20px; /* Add padding around the top bar content */
-    color: white; /* Set text color to white for contrast */
-    position: fixed; /* Fix the position to the top of the viewport */
-    width: 100%; /* Ensure the top bar spans the full width of the viewport */
-    top: 0; /* Align the top bar with the top of the viewport */
-    z-index: 1; /* Ensure the top bar is on top of other elements */
+/* Top bar styling */
+header {
+    background-color: #343a40; /* Dark background */
+    color: #ffffff; /* White text */
+    padding: 10px; /* Padding for top bar */
+    text-align: center; /* Center text in top bar */
 }
 
-/* Top Menu Icon Styling */
-.top-menu {
-    font-size: 24px; /* Set the size of the menu icon */
-    cursor: pointer; /* Change the cursor to a pointer to indicate clickable item */
-}
-
-/* Logo Styling */
-.logo img {
-    height: 40px; /* Set the height of the logo image */
-}
-
-/* Search Bar Styling */
-.search-bar {
-    display: flex; /* Use flexbox to align search input and button horizontally */
-    align-items: center; /* Vertically center the items within the search bar */
-    flex-grow: 1; /* Allow the search bar to take up the remaining space */
-    margin: 0 20px; /* Add horizontal margins to separate the search bar from other elements */
-}
-
-/* Search Input Field Styling */
-.search-bar input {
-    padding: 5px; /* Add padding inside the input field for better usability */
-    border-radius: 5px; /* Round the corners of the input field */
-    border: none; /* Remove default border */
-}
-
-/* Search Button Styling */
-.search-bar button {
-    background-color: #007BFF; /* Blue background color for the button */
-    color: white; /* White text color for contrast */
-    border: none; /* Remove default border */
-    border-radius: 5px; /* Round the corners of the button */
-    padding: 5px 10px; /* Add padding inside the button */
-    cursor: pointer; /* Change cursor to pointer on hover to indicate it's clickable */
-}
-
-/* Search Icon Styling inside Button */
-.search-bar button i {
-    font-size: 16px; /* Set the size of the search icon */
-}
-
-/* User Icon Styling */
-.user-icon {
-    height: 40px; /* Set the height of the user icon image */
-    border-radius: 50%; /* Make the image circular */
-}
-
-/* Side Navigation Styling */
-.sidenav {
-    height: 100%; /* Full height of the viewport */
-    width: 0; /* Initially hidden with zero width */
-    position: fixed; /* Fix the position to the left side of the viewport */
-    z-index: 1; /* Ensure the side navigation is on top of other elements */
-    top: 64px; /* Align below the top bar (adjust if the top bar height changes) */
-    left: 0; /* Align with the left edge of the viewport */
-    background-color: #333; /* Dark grey background color for the side navigation */
-    overflow-x: hidden; /* Hide horizontal overflow */
-    transition: 0.3s; /* Smooth transition effect for opening and closing */
-    padding-top: 60px; /* Add padding to the top of the side navigation for spacing */
-}
-
-/* Side Navigation Link Styling */
-.sidenav a {
-    padding: 8px 8px 8px 32px; /* Add padding and align text inside links */
-    text-decoration: none; /* Remove underline from links */
-    font-size: 25px; /* Set the font size for links */
-    color: white; /* Set link text color to white for contrast */
-    display: block; /* Block display for each link to make them stack vertically */
-    transition: 0.3s; /* Smooth transition effect on hover */
-}
-
-/* Side Navigation Link Hover Styling */
-.sidenav a:hover {
-    color: #f1f1f1; /* Light grey color when hovered over for better visibility */
-}
-
-/* Close Button Styling in Side Navigation */
-.sidenav .closebtn {
-    position: absolute; /* Position the close button absolutely within the side navigation */
-    top: 0; /* Align with the top of the side navigation */
-    right: 25px; /* Position from the right edge of the side navigation */
-    font-size: 36px; /* Size of the close button text */
-    margin-left: 50px; /* Add left margin for spacing */
-}
-
-/* Log Out Button Styling */
-.log-out-button {
-    padding: 8px 32px; /* Add padding around the button */
-    text-align: center; /* Center the button text */
-}
-
-.log-out-button button {
-    background-color: #dc3545; /* Red background color for the log-out button */
-    color: white; /* White text color for contrast */
-    border: none; /* Remove default border */
-    border-radius: 5px; /* Round the corners of the button */
-    padding: 10px; /* Add padding inside the button */
-    cursor: pointer; /* Change cursor to pointer on hover to indicate it's clickable */
-}
-
-/* Main Content Adjustment */
+/* Main content area */
 #main {
-    transition: margin-left .3s; /* Smooth transition effect for margin adjustment */
-    padding: 50px; /* Add padding inside the main content area */
+    max-width: 800px; /* Maximum width for main content */
+    margin: 20px auto; /* Center main content */
+    padding: 20px; /* Padding for main content */
+    background: #ffffff; /* White background */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 }
 
-/* Title Section Styling */
-.title-section {
-    text-align: center; /* Center the title text */
-    margin: 20px 0; /* Add vertical margins around the title */
-}
-
-.title-section h2 {
-    font-size: 24px; /* Set the font size for the title */
-}
-
-
-
-/*------------------------ Profile Section Styling ---------------------*/
+/* Profile section styling */
 .profile-section {
-    text-align: center; /* Center text inside the profile section */
-    padding: 20px; /* Add padding around the section */
-    background-color: #fff; /* White background for the profile section */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow to the profile section */
-    border-radius: 10px; /* Round corners of the section */
-    margin: 20px auto; /* Center the section with auto margins */
-    width: 80%; /* Set width of the profile section */
+    margin-top: 20px; /* Space above profile section */
+    text-align: center; /* Center align content */
 }
 
-.profile-photo {
-    width: 150px; /* Set width for the profile photo */
-    height: 150px; /* Set height for the profile photo */
-    border-radius: 50%; /* Make the photo circular */
-    margin-bottom: 20px; /* Add space below the photo */
+/* Profile image styling */
+.profile-section img {
+    width: 150px; /* Width for profile image */
+    height: 150px; /* Height for profile image */
+    border-radius: 50%; /* Circular profile image */
+    margin-bottom: 20px; /* Space below the image */
 }
 
-.profile-buttons {
-    margin-top: 20px; /* Add space above the buttons */
-  
-cursor: pointer; /* Change cursor to pointer on hover */
-    transition: background-color 0.3s; /* Smooth transition for hover effect */
+/* Form styling */
+form {
+    margin: 20px 0; /* Vertical margin for forms */
+    padding: 20px; /* Padding inside forms */
+    background: #f9f9f9; /* Light background for forms */
+    border: 1px solid #ddd; /* Light border for form */
+    border-radius: 8px; /* Rounded corners for form */
 }
 
-.profile-buttons button:hover {
-    background-color: #0056b3; /* Darker blue color on hover */
+/* Horizontal layout for labels and inputs */
+.form-group {
+    display: flex; /* Use flexbox for horizontal alignment */
+    align-items: center; /* Center items vertically */
+    margin-bottom: 15px; /* Space below each form group */
+}
+
+/* Label styling */
+label {
+    width: 150px; /* Fixed width for labels */
+    text-align: left; /* Left align text in labels */
+}
+
+/* Input field styling */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="file"] {
+    flex: 1; /* Allow input fields to grow */
+    padding: 10px; /* Padding inside inputs */
+    border: 1px solid #ccc; /* Light border */
+    border-radius: 4px; /* Rounded corners */
 }
 
 
-
-
-/* Footer Styling */
-footer {
-    text-align: center; /* Center text inside the footer */
-    padding: 20px; /* Add padding around the footer content */
-    background-color: #333; /* Dark grey background color for the footer */
-    color: white; /* White text color for contrast */
-    position: relative; /* Change from absolute to relative positioning */
-    bottom: 0; /* Align the footer with the bottom of the page */
-    width: 100%; /* Ensure the footer spans the full width of the page */
+.C_pwd input[type="password"]{
+    width: ;
 }
 
-/* Footer Link Styling */
-footer a {
-    color: white; /* Set link color to white */
-    margin: 5px 0; /* Add space between footer links */
-}
-
-
-.profile-buttons button {
-    background-color: #007BFF; /* Blue background for buttons */
-    color: white; /* White text color */
+/* Button styling */
+button {
+    padding: 10px 15px; /* Padding for buttons */
+    background-color: #28a745; /* Green background */
+    color: #fff; /* White text */
     border: none; /* Remove default border */
-    border-radius: 5px; /* Round corners of the buttons */
-    padding: 10px 20px; /* Add padding inside the buttons */
-    margin: 5px; /* Add margin between buttons */
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
 }
 
+/* Button hover effect */
+button:hover {
+    background-color: #218838; /* Darker green on hover */
+}
 
+/* Centered small input for current password */
+#current_password {
+    width: auto; /* Auto width to fit the content */
+    text-align: center; /* Center the text in the input */
+    font-size: 12px; /* Smaller font size */
+    margin: 10px auto; /* Center the margin */
+}
 
+/* Styles for small buttons */
+#saveProfile,
+#savePassword {
+    display: none; /* Initially hide save buttons */
+}
 
+/* Styles for profile editing */
+input[disabled] {
+    background-color: #e9ecef; /* Light background for disabled inputs */
+}
 
+/* Footer styling */
+footer {
+    background-color: #343a40; /* Dark background for footer */
+    color: #ffffff; /* White text color */
+    text-align: center; /* Center align text in footer */
+    padding: 10px 0; /* Padding for footer */
+    position: relative; /* Positioning context */
+    bottom: 0; /* Stick to the bottom */
+    width: 100%; /* Full width for footer */
+}
 
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    /* Stack elements for smaller screens */
+    #main {
+        margin: 10px; /* Reduce margin on smaller screens */
+    }
 
+    .profile-section img {
+        width: 100px; /* Smaller image on mobile */
+        height: 100px; /* Smaller image on mobile */
+    }
 
+    button {
+        width: 100%; /* Full width for buttons on mobile */
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="file"] {
+        font-size: 14px; /* Adjust font size for smaller screens */
+    }
+}

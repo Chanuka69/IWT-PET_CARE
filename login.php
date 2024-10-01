@@ -17,11 +17,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $row = mysqli_fetch_assoc($result); // Fetch user data
         $stored_password = $row['password']; // Get the stored password
 
-        if ($stored_password === $password) { // Check if the provided password matches the stored password
+        if ($stored_password === md5($password)) { // Check if the provided password matches the stored password (hashed with MD5)
             $_SESSION['loggedin'] = true; // Set session variables
             $_SESSION['user_id'] = $row['user_id'];
  
-            header("Location: http://localhost/PetCare/Book pet hostel.php"); // Redirect to the vet page
+            header("Location: http://localhost/PetCare/sign up.php"); // Redirect to the user profile page
             exit; // Stop further execution after redirection
         } else {
             $error = "Email or Password Incorrect."; // Error message for incorrect password
@@ -64,3 +64,4 @@ mysqli_close($conn); // Close the database connection
     </section>
 </body>
 </html>
+

@@ -1,30 +1,36 @@
 <?php
-    ini_set('display_errors', 1);
-    ini_set('display_startup_errors', 1);
-    error_reporting(E_ALL);
-    
-    session_start(); // Start the session
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
-    // Check if the user is logged in by checking if 'user_id' exists in the session
-    if (!isset($_SESSION['user_id'])) {
-        die("Error: You must be logged in to access this page."); // If not logged in, display an error message
+session_start(); // Start the session
+
+// Check if the user is logged in by checking if 'user_id' exists in the session
+if (!isset($_SESSION['user_id'])) {
+    die("Error: You must be logged in to access this page."); // If not logged in, display an error message
+}
+
+require "connect_dbshop.php";
+
+// Store the logged-in user's ID from the session
+$user_id = $_SESSION['user_id'];
+
+// Handle delete request
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_pet_id'])) {
+    $pet_id = $conn->real_escape_string($_POST['delete_pet_id']);
+    $delete_query = "DELETE FROM Pet_Data WHERE pet_id='$pet_id' AND owner_id='$user_id'";
+
+    if ($conn->query($delete_query)) {
+        echo "Pet deleted successfully.";
+    } else {
+        echo "Error: " . $conn->error;
     }
+}
 
-    require "connect_dbshop.php";
-
-
-
-    // Store the logged-in user's ID from the session
-    $user_id = $_SESSION['user_id'];
-
-    
-    // Fetch the user's current profile details
-    $query = "SELECT name,pet_image_path  FROM Pet_Data WHERE owner_id='$user_id'";
-    
-    $pname_result = mysqli_query($conn, $query);
-
+// Fetch the user's pets
+$query = "SELECT pet_id, name, pet_image_path FROM Pet_Data WHERE owner_id='$user_id'";
+$pname_result = mysqli_query($conn, $query);
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -57,6 +63,10 @@
             <a href="My pets.php">My Pets</a>
             <a href="#">My Appointments</a>
             <a href="#">My Cart</a>
+            <a href="Book pet hostel.php">hostel</a>
+            <a href="sign up.php">sign up</a>
+            <a href="Book vet appointment.php">vet</a>
+            <a href="test_vet.php"> vet test </a>
         </div>
         <div class="log-out-button">
             <button>Log Out</button>
@@ -66,24 +76,27 @@
     <!-- Main Content -->
     <div id="main">
         <h2 class="title-section">My Pets</h2> <!-- Title for the pets section -->
-        <button class="add-pet-btn"  onclick="location.href='sign up.php';">Add New Pet</button> <!-- Button to add new pet -->
+        <button class="add-pet-btn" onclick="location.href='sign up.php';">Add New Pet</button> <!-- Button to add new pet -->
 
         <!-- Pet Cards Section -->
         <section class="pet-cards">
             <?php
             // Check if any pets are found
-            if(mysqli_num_rows($pname_result)>0){
+            if (mysqli_num_rows($pname_result) > 0) {
                 // Iterate through each pet and create a card
-                while($row= mysqli_fetch_assoc($pname_result)){
+                while ($row = mysqli_fetch_assoc($pname_result)) {
                     echo '<div class="pet-card">';
-                    echo '<img src="'. htmlspecialchars($row['pet_image_path']) . '" alt="Pet Image" class="pet-image">'; // Fetch and display pet image
+                    echo '<img src="' . htmlspecialchars($row['pet_image_path']) . '" alt="Pet Image" class="pet-image">'; // Fetch and display pet image
                     echo '<h3>' . htmlspecialchars($row['name']) . '</h3>';
+                    echo '<form method="POST" action="' . htmlspecialchars($_SERVER["PHP_SELF"]) . '">';
+                    echo '<input type="hidden" name="delete_pet_id" value="' . htmlspecialchars($row['pet_id']) . '">';
+                    echo '<button type="submit" class="delete-pet-btn">Delete Pet</button>';
+                    echo '</form>';
                     echo '</div>';
                 }
             } else {
-                echo '<p>No pets found.</p>'; 
+                echo '<p>No pets found.</p>';
             }
-
             ?>
         </section>
 

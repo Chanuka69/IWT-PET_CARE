@@ -1,21 +1,63 @@
+
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
-    session_start(); // Start the session
+session_start(); // Start the session
 
-    // Check if the user is logged in by checking if 'user_id' exists in the session
-    if (!isset($_SESSION['userId'])) {
-        die("Error: You must be logged in to access this page."); // If not logged in, display an error message
+// Check if the user is logged in by checking if 'user_id' exists in the session
+if (!isset($_SESSION['user_id'])) {
+    die("Error: You must be logged in to access this page."); // If not logged in, display an error message
+}
+
+require "connect_dbshop.php";
+
+// Fetch employee data where service_provided is 'vet'
+$query = "SELECT emp_id, first_name, last_name, email FROM Employee WHERE service_provided = 'vet'";
+$result = mysqli_query($conn, $query);
+
+// Fetch user postal code
+$user_id = $_SESSION['user_id'];
+$user_query = "SELECT postal_code FROM User_Data WHERE user_id = '$user_id'";
+$user_result = mysqli_query($conn, $user_query);
+$user_data = mysqli_fetch_assoc($user_result);
+$user_postal_code = $user_data['postal_code'];
+
+// Fetch pet data for the logged-in user
+$pet_query = "SELECT pet_id, name FROM Pet_Data WHERE owner_id = '$user_id'";
+$pet_result = mysqli_query($conn, $pet_query);
+
+// Check for appointment submission
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['appointment_time'])) {
+    $vet_id = $_POST['vet_id'];
+    $pet_id = $_POST['pet_id'];
+    $service_id = 503; // Static service ID for vet
+    $appointment_date = date("Y-m-d");
+    $appointment_time = $_POST['appointment_time'];
+
+    // Prepare the SQL statement
+    $insert_query = "INSERT INTO Appointment (customer_id, vet_id, pet_id, service_id, appointment_date, appointment_time, postal_code)
+                     VALUES ('$user_id', '$vet_id', '$pet_id', '$service_id', '$appointment_date', '$appointment_time', '$user_postal_code')";
+
+    // Execute the query and check for errors
+    if (mysqli_query($conn, $insert_query)) {
+        // Redirect to the same page to prevent form resubmission
+        header("Location: Book vet appointment.php");
+        exit();
+    } else {
+        // Log the error and display a message
+        error_log("Database insert error: " . mysqli_error($conn));
+        echo "<script>alert('Error: Could not book appointment. Please try again.');</script>";
     }
+}
 
-    require "connect_dbshop.php";
-
-    $query = "INSERT INTO appoinmet VALUES ();
-
-    $result = mysli_query($conn,$quey);
-
-
+// Fetch service rate for veterinary services (service ID 503)
+$service_query = "SELECT service_rate FROM Services WHERE service_id = 503";
+$service_result = mysqli_query($conn, $service_query);
+$service_data = mysqli_fetch_assoc($service_result);
+$service_rate = $service_data['service_rate'];
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -24,7 +66,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Veterinary Booking</title>
     <link rel="stylesheet" href="vet.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- Font Awesome for search icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <!-- Top Bar -->
@@ -48,6 +90,10 @@
             <a href="My pets.html">My Pets</a>
             <a href="#">My Appointments</a>
             <a href="#">My Cart</a>
+            <a href="Book pet hostel.php">Hostel</a>
+            <a href="sign up.php">Sign Up</a>
+            <a href="Book vet appointment.php">Vet</a>
+            <a href="test_vet_php">Vet Test</a>
         </div>
         <div class="log-out-button">
             <button>Log Out</button>
@@ -63,109 +109,29 @@
 
         <!-- Vets List in Cards -->
         <section class="vet-list">
-            <div class="vet-card">
-                <img src="https://www.housethatbarks.com/wp-content/uploads/2018/04/Golden-Retriever-with-a-Vet.jpg" alt="Vet Image" class="vet-image">
-                <h3>Dr. John Doe</h3>
-                <p>⭐⭐⭐⭐☆</p>
-                <p>10 reviews</p>
-                <button class="appointment-btn" onclick="bookAppointment('10:30')">TODAY at 10:30</button>
-                <button class="appointment-btn" onclick="bookAppointment('13:30')">TODAY at 13:30</button>
-            </div>
-            <div class="vet-card">
-                <img src="https://www.housethatbarks.com/wp-content/uploads/2018/04/Golden-Retriever-with-a-Vet.jpg" alt="Vet Image" class="vet-image">
-                <h3>Dr. Jane Smith</h3>
-                <p>⭐⭐⭐⭐☆</p>
-                <p>12 reviews</p>
-                <button class="appointment-btn" onclick="bookAppointment('11:00')">TODAY at 11:00</button>
-                <button class="appointment-btn" onclick="bookAppointment('14:00')">TODAY at 14:00</button>
-            </div>
-
-            <div class="vet-card">
-                <img src="https://www.housethatbarks.com/wp-content/uploads/2018/04/Golden-Retriever-with-a-Vet.jpg" alt="Vet Image" class="vet-image">
-                <h3>Dr. Jane Smith</h3>
-                <p>⭐⭐⭐⭐☆</p>
-                <p>12 reviews</p>
-                <button class="appointment-btn" onclick="bookAppointment('11:00')">TODAY at 11:00</button>
-                <button class="appointment-btn" onclick="bookAppointment('14:00')">TODAY at 14:00</button>
-            </div>
-            <div class="vet-card">
-                <img src="https://www.housethatbarks.com/wp-content/uploads/2018/04/Golden-Retriever-with-a-Vet.jpg" alt="Vet Image" class="vet-image">
-                <h3>Dr. Jane Smith</h3>
-                <p>⭐⭐⭐⭐☆</p>
-                <p>12 reviews</p>
-                <button class="appointment-btn" onclick="bookAppointment('11:00')">TODAY at 11:00</button>
-                <button class="appointment-btn" onclick="bookAppointment('14:00')">TODAY at 14:00</button>
-            </div>
-            <div class="vet-card">
-                <img src="https://www.housethatbarks.com/wp-content/uploads/2018/04/Golden-Retriever-with-a-Vet.jpg" alt="Vet Image" class="vet-image">
-                <h3>Dr. Jane Smith</h3>
-                <p>⭐⭐⭐⭐☆</p>
-                <p>12 reviews</p>
-                <button class="appointment-btn" onclick="bookAppointment('11:00')">TODAY at 11:00</button>
-                <button class="appointment-btn" onclick="bookAppointment('14:00')">TODAY at 14:00</button>
-            </div>
-
-            <div class="vet-card">
-                <img src="https://www.housethatbarks.com/wp-content/uploads/2018/04/Golden-Retriever-with-a-Vet.jpg" alt="Vet Image" class="vet-image">
-                <h3>Dr. Jane Smith</h3>
-                <p>⭐⭐⭐⭐☆</p>
-                <p>12 reviews</p>
-                <button class="appointment-btn" onclick="bookAppointment('11:00')">TODAY at 11:00</button>
-                <button class="appointment-btn" onclick="bookAppointment('14:00')">TODAY at 14:00</button>
-            </div>
-
-            <div class="vet-card">
-                <img src="https://www.housethatbarks.com/wp-content/uploads/2018/04/Golden-Retriever-with-a-Vet.jpg" alt="Vet Image" class="vet-image">
-                <h3>Dr. John Doe</h3>
-                <p>⭐⭐⭐⭐☆</p>
-                <p>10 reviews</p>
-                <button class="appointment-btn" onclick="bookAppointment('10:30')">TODAY at 10:30</button>
-                <button class="appointment-btn" onclick="bookAppointment('13:30')">TODAY at 13:30</button>
-            </div>
-            <div class="vet-card">
-                <img src="https://www.housethatbarks.com/wp-content/uploads/2018/04/Golden-Retriever-with-a-Vet.jpg" alt="Vet Image" class="vet-image">
-                <h3>Dr. Jane Smith</h3>
-                <p>⭐⭐⭐⭐☆</p>
-                <p>12 reviews</p>
-                <button class="appointment-btn" onclick="bookAppointment('11:00')">TODAY at 11:00</button>
-                <button class="appointment-btn" onclick="bookAppointment('14:00')">TODAY at 14:00</button>
-            </div>
-
-            <div class="vet-card">
-                <img src="https://www.housethatbarks.com/wp-content/uploads/2018/04/Golden-Retriever-with-a-Vet.jpg" alt="Vet Image" class="vet-image">
-                <h3>Dr. Jane Smith</h3>
-                <p>⭐⭐⭐⭐☆</p>
-                <p>12 reviews</p>
-                <button class="appointment-btn" onclick="bookAppointment('11:00')">TODAY at 11:00</button>
-                <button class="appointment-btn" onclick="bookAppointment('14:00')">TODAY at 14:00</button>
-            </div>
-            <div class="vet-card">
-                <img src="https://www.housethatbarks.com/wp-content/uploads/2018/04/Golden-Retriever-with-a-Vet.jpg" alt="Vet Image" class="vet-image">
-                <h3>Dr. Jane Smith</h3>
-                <p>⭐⭐⭐⭐☆</p>
-                <p>12 reviews</p>
-                <button class="appointment-btn" onclick="bookAppointment('11:00')">TODAY at 11:00</button>
-                <button class="appointment-btn" onclick="bookAppointment('14:00')">TODAY at 14:00</button>
-            </div>
-
-            <div class="vet-card">
-                <img src="https://www.housethatbarks.com/wp-content/uploads/2018/04/Golden-Retriever-with-a-Vet.jpg" alt="Vet Image" class="vet-image">
-                <h3>Dr. Jane Smith</h3>
-                <p>⭐⭐⭐⭐☆</p>
-                <p>12 reviews</p>
-                <button class="appointment-btn" onclick="bookAppointment('11:00')">TODAY at 11:00</button>
-                <button class="appointment-btn" onclick="bookAppointment('14:00')">TODAY at 14:00</button>
-            </div>
-
-            <div class="vet-card">
-                <img src="https://www.housethatbarks.com/wp-content/uploads/2018/04/Golden-Retriever-with-a-Vet.jpg" alt="Vet Image" class="vet-image">
-                <h3>Dr. Jane Smith</h3>
-                <p>⭐⭐⭐⭐☆</p>
-                <p>12 reviews</p>
-                <button class="appointment-btn" onclick="bookAppointment('11:00')">TODAY at 11:00</button>
-                <button class="appointment-btn" onclick="bookAppointment('14:00')">TODAY at 14:00</button>
-            </div>
-
+            <?php while ($row = mysqli_fetch_assoc($result)): ?>
+                <div class="vet-card">
+                    <img src="https://www.housethatbarks.com/wp-content/uploads/2018/04/Golden-Retriever-with-a-Vet.jpg" alt="Vet Image" class="vet-image">
+                    <h3>Dr. <?php echo $row['first_name'] . ' ' . $row['last_name']; ?></h3>
+                    <p>Contact: <?php echo $row['email']; ?></p>
+                    <p>Service Rate: $<?php echo $service_rate; ?></p>
+                    <form method="POST">
+                        <input type="hidden" name="vet_id" value="<?php echo $row['emp_id']; ?>">
+                        <label for="pet_id">Select Pet:</label>
+                        <select name="pet_id" required>
+                            <?php
+                            // Reset pet_result pointer to fetch pets again for each vet
+                            mysqli_data_seek($pet_result, 0);
+                            while ($pet_row = mysqli_fetch_assoc($pet_result)): ?>
+                                <option value="<?php echo $pet_row['pet_id']; ?>"><?php echo $pet_row['name']; ?></option>
+                            <?php endwhile; ?>
+                        </select>
+                        <button class="appointment-btn" type="button" onclick="confirmAndSetTime('10:30', this.form)">TODAY at 10:30</button>
+                        <button class="appointment-btn" type="button" onclick="confirmAndSetTime('13:30', this.form)">TODAY at 13:30</button>
+                        <input type="hidden" name="appointment_time" value="">
+                    </form>
+                </div>
+            <?php endwhile; ?>
         </section>
 
         <!-- Footer -->
@@ -175,7 +141,13 @@
         </footer>
     </div>
 
-    <script src="scripts.js"></script>
+    <script>
+    function confirmAndSetTime(time, form) {
+        if (confirm('Are you sure you want to book this appointment for TODAY at ' + time + '?')) {
+            form.appointment_time.value = time; // Set the appointment_time value
+            form.submit(); // Submit the form
+        }
+    }
+    </script>
 </body>
 </html>
-

@@ -1,4 +1,7 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 session_start(); // Start the session
 
@@ -11,7 +14,7 @@ require "connect_dbshop.php";
 
 $user_id = $_SESSION['user_id'];
 
-if ($_SERVER["REQUEST_METHOD"]=="POST"){
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $pname = $_POST['petname'];
     $page = $_POST['pet_age'];
     $ptype = $_POST['pet_type'];
@@ -20,30 +23,42 @@ if ($_SERVER["REQUEST_METHOD"]=="POST"){
     $pgender = $_POST['pet_gender'];
     $pnote = $_POST['pet_note'];
 
-    if(isset($_FILES['pet_photo'])){
-        $photo = $_FILES['pet_photo'];
-    } else{
-        $photo = null;
+    $photo = ''; // Default photo variable to store the file path
+
+    // Handle the uploaded file
+    if (isset($_FILES['pet_photo']) && $_FILES['pet_photo']['error'] == 0) {
+        $target_dir = "uploads/";
+        $target_file = $target_dir . basename($_FILES["pet_photo"]["name"]);
+        $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+
+        // Validate the image file
+        $check = getimagesize($_FILES["pet_photo"]["tmp_name"]);
+        if ($check !== false) {
+            if (move_uploaded_file($_FILES["pet_photo"]["tmp_name"], $target_file)) {
+                $photo = $target_file;
+                $message = "Image uploaded successfully.";
+            } else {
+                $message = "Sorry, there was an error uploading your file.";
+            }
+        } else {
+            $message = "File is not an image.";
+        }
     }
-    
 
-    $sql = "INSERT INTO Pet_Data VALUES (NULL,'$user_id','$pname','$page','$pbreed','$pgender','$pweight','$ptype','$photo','$pnote')";
+    // Insert into the database
+    $sql = "INSERT INTO Pet_Data (owner_id, name, age, breed, gender, weight, pet_type, pet_image_path, pet_note) 
+            VALUES ('$user_id', '$pname', '$page', '$pbreed', '$pgender', '$pweight', '$ptype', '$photo', '$pnote')";
 
-    if($conn->query($sql))
-    {
+    if ($conn->query($sql)) {
         header("Location: http://localhost/PetCare/User Profile.php");
         die();
-    }
-    else {
+    } else {
         echo "Error: " . $conn->error;
     }
-    
 
     $conn->close();
 }
-
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -59,9 +74,9 @@ if ($_SERVER["REQUEST_METHOD"]=="POST"){
 
     <div class="R-page-container">
         <div class="R-card">
-            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]) ?>" method="POST">
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]) ?>" method="POST" enctype="multipart/form-data">
                 <fieldset>
-                    <legend>Sign Up</legend>
+                    <legend>Register Your Pet</legend>
                     
                     <label for="pet_name">Pet Name</label>
                     <input type="text" name="petname" placeholder="Enter your pet's name" required>
@@ -97,7 +112,8 @@ if ($_SERVER["REQUEST_METHOD"]=="POST"){
                     <textarea name="pet_note" placeholder="Any special notes about your pet"></textarea>
 
                     <label for="pet_photo">Pet Photo</label>
-                    <input type="file" id="myFile" name="filename"> 
+                    <input type="file" id="myFile" name="pet_photo"> 
+
                     <!-- Button wrapper -->
                     <div class="R-button-wrapper">
                         <button type="submit">Register Now</button>
@@ -107,7 +123,6 @@ if ($_SERVER["REQUEST_METHOD"]=="POST"){
         </div>
     </div>
 
-
-
 </body>
 </html>
+

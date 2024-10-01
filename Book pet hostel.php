@@ -1,5 +1,9 @@
 <?php
-session_start();
+
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
+    session_start();
 
 if (!isset($_SESSION['user_id'])) {
     die("Error: You must be logged in to access this page.");
@@ -20,13 +24,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (empty($hostel_type)) {
         echo "<script>alert('Error: Please select a hostel option.');</script>";
     } else {
-        // Get current date and time for appointment_date and appointment_time
-        $appointment_date = date("Y-m-d");
-        $appointment_time = date("H:i:s");
 
         // Insert booking details into the Appointment table
-        $query = "INSERT INTO Appointment (appointment_id, customer_id, pet_id, appointment_date, appointment_time, checkin_date, checkout_date, hostel_type)
-                  VALUES (NULL, '$user_id', '$pet_id', '$appointment_date', '$appointment_time', '$checkin_date', '$checkout_date', '$hostel_type')";
+        $query = "INSERT INTO Appointment (appointment_id, customer_id, pet_id,checkin_date,appointment_date, checkout_date, hostel_type)
+                  VALUES (NULL, '$user_id', '$pet_id', NULL,'$checkin_date', '$checkout_date', '$hostel_type')";
 
         if (mysqli_query($conn, $query)) {
             echo "<script>alert('Booking successful!');</script>";
@@ -75,6 +76,10 @@ $pets_result = mysqli_query($conn, $query);
             <a href="My pets.html">My Pets</a>
             <a href="#">My Appointments</a>
             <a href="#">My Cart</a>
+            <a href="Book pet hostel.php">hostel</a>
+            <a href="sign up.php">sign up</a>
+            <a href="Book vet appointment.php">vet</a>
+            <a href="test_vet.php"> vet test </a>
         </div>
         <div class="log-out-button">
             <button>Log Out</button>
@@ -139,32 +144,7 @@ $pets_result = mysqli_query($conn, $query);
         </footer>
     </div>
 
-    <script>
-        function selectHostel(hostel) {
-            // Set the hidden input value to the selected hostel type
-            document.getElementById('hostelOption').value = hostel;
-
-            // Remove 'selected' class from all cards
-            const cards = document.querySelectorAll('.hostel-card');
-            cards.forEach(card => card.classList.remove('selected'));
-
-            // Add 'selected' class to the clicked card
-            if (hostel === 'Standard') {
-                document.getElementById('standardCard').classList.add('selected');
-            } else if (hostel === 'Kitty House') {
-                document.getElementById('kittyHouseCard').classList.add('selected');
-            }
-        }
-
-        function validateHostelOption(event) {
-            // Prevent form submission if no hostel option is selected
-            const hostelOption = document.getElementById('hostelOption').value;
-            if (!hostelOption) {
-                alert("Please select a hostel option.");
-                event.preventDefault();
-            }
-        }
-    </script>
+    <script src="scripts.js"></script>
 </body>
 
 </html>
